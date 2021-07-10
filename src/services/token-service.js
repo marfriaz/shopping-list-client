@@ -13,9 +13,6 @@ const TokenService = {
   hasAuthToken() {
     return !!TokenService.getAuthToken();
   },
-  makeBasicAuthToken(email, password) {
-    return window.btoa(`${email}:${password}`);
-  },
 };
 
 export default TokenService;

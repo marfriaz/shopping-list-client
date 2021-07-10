@@ -1,10 +1,24 @@
 .App {
   text-align: center;
 }
+.App__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Header {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.07), 0 1px 0 0 rgba(0, 0, 0, 0.03);
+  background: white;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.WelcomeHeader {
+  margin-right: 20%;
+  color: green;
 }
 
 .Container {
@@ -13,12 +27,17 @@
   align-items: center;
 }
 
+.MainHeading {
+  display: flex;
+  align-items: center;
+}
+
 .ItemList {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 75%;
-  height: 500px;
+  max-height: 500px;
   overflow: scroll;
 }
 
@@ -27,6 +46,10 @@
   padding: 10px;
   width: 200px;
   margin-bottom: 5px;
+}
+
+.ItemName {
+  word-wrap: break-word;
 }
 
 .Button {
@@ -41,37 +64,52 @@
 }
 
 #DeleteAllButton {
-  background-color: blue;
-
-  margin-bottom: 2%;
+  background-color: red;
+  /* padding-left: 1%; */
+}
+.red {
+  color: red;
 }
 
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.banner {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: url(https://images.pexels.com/photos/2733918/pexels-photo-2733918.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)
+    no-repeat;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 300px;
+  width: 70%;
+  margin-top: 2%;
+}
+
+.description h1 {
   color: white;
+  text-align: center;
+  /* width: 80%; */
 }
 
-.App-link {
-  color: #61dafb;
+@media (min-width: 450px) {
+  .banner {
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+@media (min-width: 650px) {
+  /* .description {
+    width: 50%;
+    padding-left: 3%;
+  } */
+}
+
+@media (min-width: 1800px) {
+  /* .description {
+    width: 45%;
+  } */
+}

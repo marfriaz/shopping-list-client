@@ -1,22 +1,7 @@
 import TokenService from "./token-service";
 import config from "../config";
-const axios = require("axios");
 
 const ItemApiService = {
-  // getItems() {
-  //   return axios
-  //     .get(`${config.API_ENDPOINT}/items`, {
-  //       method: "GET",
-  //       headers: {
-  //         "content-type": "application/json",
-  //         authorization: `${TokenService.getAuthToken()}`,
-  //       },
-  //     })
-  //     .then((res) =>
-  //       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-  //     );
-  // },
-
   getItems() {
     return fetch(`${config.API_ENDPOINT}/items`, {
       headers: { authorization: `${TokenService.getAuthToken()}` },
@@ -28,7 +13,10 @@ const ItemApiService = {
   deleteAllItems() {
     return fetch(`${config.API_ENDPOINT}/items`, {
       method: "DELETE",
-      headers: { authorization: `${TokenService.getAuthToken()}` },
+      headers: {
+        "content-type": "application/json",
+        authorization: `${TokenService.getAuthToken()}`,
+      },
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
@@ -45,7 +33,12 @@ const ItemApiService = {
         item,
       }),
     }).then((res) =>
-      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+      !res.ok
+        ? res
+            .json()
+            .then((e) => Promise.reject(e))
+            .then(() => TokenService.clearAuthToken())
+        : res.json()
     );
   },
 
@@ -56,24 +49,10 @@ const ItemApiService = {
         "content-type": "application/json",
         authorization: `${TokenService.getAuthToken()}`,
       },
-    }).then(
-      (res) => console.log(res)
-      // !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
-  // deleteItem(item_id) {
-  //   return axios
-  //     .delete(`${config.API_ENDPOINT}/items/${item_id}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         "content-type": "application/json",
-  //         authorization: `${TokenService.getAuthToken()}`,
-  //       },
-  //     })
-  //     .then((res) =>
-  //       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-  //     );
-  // },
 };
 
 export default ItemApiService;
