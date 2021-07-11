@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Google Project: Shopping-List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+I built a fullstack webapp that provides users with an ability to keep track of a shopping list.
 
-In the project directory, you can run:
+- User is able to add an item to the shopping list
+- User is able to view their whole shopping list
+- User is able to delete an individual item from the shopping list
+- User is able to delete their entire shopping list, with a single button click (without going and deleting each individual item one by one)
+- Each user is able to login with their Google account and their shopping list persists between their logins
 
-### `npm start`
+The app was built using React.js for the Web-Client, Node.js for the Web-Server and PostgreSql for the database.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The app works as:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. User logins in via the Google oAUth Log-in Component for React (npm react-google-login).
+2. Google oAuth returns a tokenId that is sent to the Web Server.
+3. The Web Server authenticates the tokenId via Google's node.js client library for authentication (npm google-auth-library):
 
-### `npm test`
+- If successful, Google returns the user's credentials. The Web Server checks if the user exists in the Postgres database by matching email. If not, the user (email and name) is added to database. The Web Server returns the authenticated token to the Web Client. The Web Client stores the token in local storage to make subsequent HTTP requests to the server.
+- If unsuccessful, the server returns a Google Authentication Failure error.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. When logged in, the user may:
 
-### `npm run build`
+- View items in their shopping list (GET request)
+- Add items to shopping list (POST request)
+- Delete an item from the shopping list (DELETE request)
+- Delete all items from the shopping list (DELETE request)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. All HTTP requests are first authenticated by the checkAuthenticated middleware (process above^).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- If auth is successful, the server makes a database transaction via Knex (a SQL query builder library) and returns a response to the Web Client.
+- If auth is unsuccessful, the server returns a Google Authentication Failure error. The Web Client will sign the user out.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Prereqs
 
-### `npm run eject`
+1. Please ensure you have the latest version of Node downloaded.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- To check if already downloaded, from terminal: node -v
+- To install, visit [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Please ensure you have the latest version of Postgresql downloaded (https://www.postgresql.org/download/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- For quick setup, you may: 1. Download [Homebrew] (https://brew.sh/) 2. Type in Command Line: brew update 3. brew install postgresql
+- To start Postgres server, Type in Command Line: pg_ctl -D /usr/local/var/postgres start. To start Postgres server, Type in Command Line: pg_ctl -D /usr/local/var/postgres stop.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Setup
 
-## Learn More
+1. Setup Postgres database
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   1. To start Postgres server, Type in Command Line: pg_ctl -D /usr/local/var/postgres start
+   2. To create a Postgres super user, Type in Command Line: createuser -Pw --interactive
+   3. To create a Postgres database, Type in Command Line: createdb -U "super user name" "database name"
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   - Example: createdb -U shopping-list-admin shopping-list
 
-### Code Splitting
+2. Setup Web-Server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   1. From terminal, cd into shopping-list-server directory
+   2. Install dependencies (npm install)
+   3. From config.js, update DATABASE_URL to "postgresql://"database user name"@localhost/"database name"
 
-### Analyzing the Bundle Size
+   - Example: "postgresql://shopping-list-user@localhost/shopping-list"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   4. Type in Command Line: npm run migrate. This will create the database tables using a Node.js SQL migration library (npm postgrator) using the SQL scripts from the migrations folder.
+   5. Run the server by running 'npm start'.
 
-### Making a Progressive Web App
+3. Set up Web-Client:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   1. From terminal, cd into shopping-list-home-client directory
+   2. Install dependencies (npm install)
+   3. Run the client by running 'npm start'. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
