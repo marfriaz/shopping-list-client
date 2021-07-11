@@ -12,7 +12,6 @@ export default function Login(props) {
     AuthApiService.postLogin({ token: res.tokenId })
       .then((res) => {
         TokenService.saveAuthToken(res.authToken);
-        props.refreshItems();
       })
       .then(() => props.setIsAuthorized(true))
       .catch((err) => {
@@ -26,7 +25,6 @@ export default function Login(props) {
     TokenService.clearAuthToken();
     props.setIsAuthorized(false);
     props.setUser({});
-    props.setItems([]);
   };
 
   const renderLogoutLink = () => {
