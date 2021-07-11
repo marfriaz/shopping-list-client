@@ -10,9 +10,6 @@ export default function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState({});
 
-  const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-
   // Set's isAuthorized state based on presence of token
   useEffect(() => {
     setIsAuthorized(TokenService.hasAuthToken());
@@ -21,7 +18,7 @@ export default function App() {
   return (
     <div className="App">
       <nav className="Header">
-        <h2 className="WelcomeHeader">Welcome {user.name}!</h2>
+        <h2 className="WelcomeUser">Welcome {user.name}!</h2>
         <Login
           user={user}
           setUser={setUser}
@@ -30,9 +27,6 @@ export default function App() {
         />
       </nav>
       <main className="App__main">
-        <div role="alert">
-          {hasError && <p className="red">{errorMessage}</p>}
-        </div>
         <Switch>
           <Route exact path="/">
             {isAuthorized ? (
