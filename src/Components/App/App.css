@@ -17,7 +17,6 @@
 }
 
 .WelcomeUser {
-  margin-right: 20%;
   color: green;
 }
 
@@ -53,8 +52,6 @@
 }
 
 .Button {
-  /* font-size: 14px; */
-  /* font-weight: 700; */
   margin-top: 1%;
   padding: 5px 10px;
   background-color: red;
@@ -91,6 +88,12 @@
   text-align: center;
 }
 
+@media (min-width: 500px) {
+  .WelcomeUser {
+    margin-right: 20%;
+    color: green;
+  }
+}
 @media (min-width: 450px) {
   .banner {
     height: 400px;

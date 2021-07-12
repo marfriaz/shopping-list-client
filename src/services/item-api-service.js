@@ -33,12 +33,7 @@ const ItemApiService = {
         item,
       }),
     }).then((res) =>
-      !res.ok
-        ? res
-            .json()
-            .then((e) => Promise.reject(e))
-            .then(() => TokenService.clearAuthToken())
-        : res.json()
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
 

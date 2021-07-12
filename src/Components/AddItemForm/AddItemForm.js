@@ -19,6 +19,7 @@ export default function AddItemForm(props) {
           props.setIsAuthorized(false);
           props.setUser({});
           props.setItems([]);
+          window.alert("401 Unauthorized. Please login again.");
           return;
         }
         props.setHasError(true);

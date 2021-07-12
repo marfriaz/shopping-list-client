@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <nav className="Header">
+      <header className="Header">
         <h2 className="WelcomeUser">Welcome {user.name}!</h2>
         <Login
           user={user}
@@ -25,7 +25,7 @@ export default function App() {
           isAuthorized={isAuthorized}
           setIsAuthorized={(update) => setIsAuthorized(update)}
         />
-      </nav>
+      </header>
       <main className="App__main">
         <Switch>
           <Route exact path="/">

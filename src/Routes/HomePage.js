@@ -26,6 +26,7 @@ export default function HomePage(props) {
           props.setIsAuthorized(false);
           props.setUser({});
           setItems([]);
+          window.alert("401 Unauthorized. Please login again.");
           return;
         }
         setHasError(true);
@@ -47,6 +48,7 @@ export default function HomePage(props) {
           props.setIsAuthorized(false);
           props.setUser({});
           setItems([]);
+          window.alert("401 Unauthorized. Please login again.");
           return;
         }
         setHasError(true);
@@ -68,6 +70,7 @@ export default function HomePage(props) {
           props.setIsAuthorized(false);
           props.setUser({});
           setItems([]);
+          window.alert("401 Unauthorized. Please login again.");
           return;
         }
         setHasError(true);
